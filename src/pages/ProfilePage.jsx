@@ -9,10 +9,13 @@ import eyeslash from "/icons/EyeSlash.svg";
 import eye from "/icons/eye.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { profileAction } from "../redux/slices/profile";
+import constants from "../configs/constant";
 
 function ProfilePage() {
   const auth = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const apiURL = constants.apiUrl;
+
 
   // console.log(auth)
   const [profileData, setProfileData] = useState({
@@ -44,7 +47,7 @@ function ProfilePage() {
 
   // PROFILE PICTURE MODAL STATES
   const [isProfilePicModalOpen, setIsProfilePicModalOpen] = useState(false);
-  const [profileImage, setProfileImage] = useState(profilePicture);
+  // const [profileImage, setProfileImage] = useState(profilePicture);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const fileInputRef = useRef(null);
@@ -59,7 +62,7 @@ function ProfilePage() {
         throw new Error("Authentication token not found");
       }
 
-      const response = await fetch("http://localhost:8080/api/profile", {
+      const response = await fetch(`${apiURL}/profile`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -164,7 +167,7 @@ function ProfilePage() {
       }
       const token = auth.token;
 
-      const response = await fetch("http://localhost:8080/api/profile/edit", {
+      const response = await fetch(`${apiURL}/profile/edit`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -227,7 +230,7 @@ function ProfilePage() {
       // formData.append("userId", "123");
       const token = auth.token;
 
-      const response = await fetch("http://localhost:8080/api/profile/edit", {
+      const response = await fetch(`${apiURL}/profile/edit`, {
         method: "PATCH",
         body: formData,
         headers: {
@@ -289,7 +292,7 @@ function ProfilePage() {
       }
       const token = auth.token;
 
-      const response = await fetch("http://localhost:8080/api/profile/edit", {
+      const response = await fetch(`${apiURL}/profile/edit`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -352,7 +355,7 @@ function ProfilePage() {
         newPassword,
       };
 
-      const response = await fetch("http://localhost:8080/api/profile/edit", {
+      const response = await fetch(`${apiURL}/profile/edit`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
